@@ -14,19 +14,19 @@ Group:		Libraries/Python
 Source0:	http://pypi.python.org/packages/source/j/jsonschema/%{module}-%{version}.tar.gz
 # Source0-md5:	661f85c3d23094afbb9ac3c0673840bf
 URL:		http://pypi.python.org/pypi/jsonschema
-BuildArch:	noarch
+BuildRequires:	rpm-pythonprov
 %if %{with python2}
 BuildRequires:	python-argparse
-BuildRequires:	python-modules
-%endif
-BuildRequires:	python-devel
 BuildRequires:	python-mock
+BuildRequires:	python-modules
 BuildRequires:	python-nose
-%if %{with python3}
-BuildRequires:	python3-devel
-BuildRequires:	python3-mock
-BuildRequires:	python3-nose
+BuildRequires:	python-setuptools
 %endif
+%if %{with python3}
+BuildRequires:	python3-nose
+BuildRequires:	python3-setuptools
+%endif
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
