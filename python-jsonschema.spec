@@ -44,24 +44,15 @@ jsonschema is JSON Schema validator currently based on
 %prep
 %setup -q -n %{module}-%{version}
 
-set -- *
-install -d py3
-cp -a "$@" py3
-find py3 -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
-
 %build
 %if %{with python3}
-cd py3
-	%{__python3} setup.py build
-cd ..
+%py3_build
 %endif
-%{__python} setup.py build
+%py_build
 
 %if %{with tests}
 %if %{with python3}
-cd py3
 %{_bindir}/nosetests-%{py3_ver} -v
-cd ..
 %endif
 %{_bindir}/nosetests-%{py_ver} -v
 %endif
@@ -69,17 +60,11 @@ cd ..
 %install
 rm -rf $RPM_BUILD_ROOT
 %if %{with python3}
-cd py3
-%{__python3} setup.py install --skip-build \
-	--optimize=2 \
-	--root=$RPM_BUILD_ROOT
-cd ..
+%py3_install
 %endif
 
 %if %{with python2}
-%{__python} setup.py install --skip-build \
-	--optimize=2 \
-	--root=$RPM_BUILD_ROOT
+%py_install
 
 %py_postclean
 %endif
