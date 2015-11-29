@@ -15,6 +15,7 @@ Source0:	http://pypi.python.org/packages/source/j/jsonschema/%{module}-%{version
 # Source0-md5:	661f85c3d23094afbb9ac3c0673840bf
 URL:		http://pypi.python.org/pypi/jsonschema
 BuildRequires:	rpm-pythonprov
+BuildRequires:	rpmbuild(macros) >= 1.710
 %if %{with python2}
 BuildRequires:	python-argparse
 BuildRequires:	python-mock
