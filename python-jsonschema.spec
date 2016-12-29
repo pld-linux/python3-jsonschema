@@ -9,7 +9,7 @@ Summary:	An implementation of JSON Schema validation for Python 2
 Summary(pl.UTF-8):	Implementacja sprawdzania poprawności schematu JSON dla Pythona 2
 Name:		python-%{module}
 Version:	2.5.1
-Release:	3
+Release:	4
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.python.org/simple/jsonschema/
