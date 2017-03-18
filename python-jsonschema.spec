@@ -8,40 +8,43 @@
 Summary:	An implementation of JSON Schema validation for Python 2
 Summary(pl.UTF-8):	Implementacja sprawdzania poprawności schematu JSON dla Pythona 2
 Name:		python-%{module}
-Version:	2.5.1
-Release:	5
+Version:	2.6.0
+Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.python.org/simple/jsonschema/
-Source0:	https://pypi.python.org/packages/source/j/jsonschema/%{module}-%{version}.tar.gz
-# Source0-md5:	374e848fdb69a3ce8b7e778b47c30640
+Source0:	https://files.pythonhosted.org/packages/source/j/jsonschema/%{module}-%{version}.tar.gz
+# Source0-md5:	50c6b69a373a8b55ff1e0ec6e78f13f4
 URL:		https://pypi.python.org/pypi/jsonschema
-BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.710
 %if %{with python2}
-%if "%{py_ver}" < "2.7"
-BuildRequires:	python-argparse
-BuildRequires:	python-repoze.lru
-%endif
-%if "%{py_ver}" >= "2.7"
 BuildRequires:	python-functools32
-%endif
-BuildRequires:	python-modules >= 1:2.6
+BuildRequires:	python-modules >= 1:2.7
 BuildRequires:	python-setuptools
-BuildRequires:	python-vcversioner
-%if %{with tets}
+BuildRequires:	python-vcversioner >= 2.16.0.0
+%if %{with tests}
 BuildRequires:	python-mock
 BuildRequires:	python-nose
+BuildRequires:	python-rfc3987
+# optional, but tests fail if python-isodate is installed and strict_rfc3339 isn't
+BuildRequires:	python-strict_rfc3339
+BuildRequires:	python-webcolors
 %endif
 %endif
 %if %{with python3}
-BuildRequires:	python3-modules >= 1:3.4
+BuildRequires:	python3-modules >= 1:3.5
 BuildRequires:	python3-setuptools
-BuildRequires:	python3-vcversioner
+BuildRequires:	python3-vcversioner >= 2.16.0.0
 %if %{with tests}
 BuildRequires:	python3-nose
+BuildRequires:	python3-rfc3987
+# optional, but tests fail if python3-isodate is installed and strict_rfc3339 isn't
+BuildRequires:	python3-strict_rfc3339
+BuildRequires:	python3-webcolors
 %endif
 %endif
+BuildRequires:	rpm-pythonprov
+BuildRequires:	rpmbuild(macros) >= 1.714
+Requires:	python-modules >= 1:2.7
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -57,6 +60,7 @@ jsonschema to walidator schematów JSON oparty na dokumencie
 Summary:	An implementation of JSON Schema validation for Python 3
 Summary(pl.UTF-8):	Implementacja sprawdzania poprawności schematu JSON dla Pythona 3
 Group:		Libraries/Python
+Requires:	python3-modules >= 1:3.5
 
 %description -n python3-%{module}
 jsonschema is JSON Schema validator currently based on
@@ -97,7 +101,7 @@ rm -rf $RPM_BUILD_ROOT
 # pythonegg dependency generator resolves conditionals for requires() based on
 # python version that runs the generator, not the version egg is targeted;
 # avoid generation of python3egg(functools32) dependency for python 3
-%{__sed} -i -e "/^\\[:python_version=='2.[67]']/,/^$/d" $RPM_BUILD_ROOT%{py3_sitescriptdir}/jsonschema-%{version}-py*.egg-info/requires.txt
+%{__sed} -i -e "/^\\[:python_version=='2.7']/,/^$/d" $RPM_BUILD_ROOT%{py3_sitescriptdir}/jsonschema-%{version}-py*.egg-info/requires.txt
 %endif
 
 %if %{with python2}
