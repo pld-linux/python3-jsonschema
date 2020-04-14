@@ -16,7 +16,10 @@ Group:		Libraries/Python
 #Source0Download: https://pypi.python.org/simple/jsonschema/
 Source0:	https://files.pythonhosted.org/packages/source/j/jsonschema/%{module}-%{version}.tar.gz
 # Source0-md5:	f1a0b5011f05a02a8dee1070cd10a26d
+Source1:	https://json-schema.org/draft-07/json-schema-validation.html
+# Source1-md5:	e920693b4c00338d439f0a2240218bcf
 Patch0:		%{name}-webcolors.patch
+Patch1:		%{name}-nonet.patch
 URL:		https://pypi.python.org/pypi/jsonschema
 %if %{with python2}
 BuildRequires:	python-functools32
@@ -95,6 +98,10 @@ dla Pythona.
 %prep
 %setup -q -n %{module}-%{version}
 %patch0 -p1
+%patch1 -p1
+
+install -d docs/_cache
+cp -p %{SOURCE1} docs/_cache/spec.html
 
 %build
 %if %{with python2}

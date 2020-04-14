@@ -1,0 +1,18 @@
+--- jsonschema-3.2.0/docs/jsonschema_role.py.orig	2019-10-08 03:37:30.000000000 +0200
++++ jsonschema-3.2.0/docs/jsonschema_role.py	2020-04-14 18:33:13.541326079 +0200
+@@ -63,15 +63,6 @@
+         if error.errno != errno.ENOENT:
+             raise
+ 
+-    request = urllib.Request(VALIDATION_SPEC, headers=headers)
+-    response = urllib.urlopen(request, cafile=certifi.where())
+-
+-    if response.code == 200:
+-        with open(spec_path, "w+b") as spec:
+-            spec.writelines(response)
+-            spec.seek(0)
+-            return html.parse(spec)
+-
+     with open(spec_path) as spec:
+         return html.parse(spec)
+ 
