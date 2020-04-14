@@ -1,0 +1,100 @@
+From 09595a50f507399bf3fa8c68ed6371c42b9c4874 Mon Sep 17 00:00:00 2001
+From: Julian Berman <Julian@GrayVines.com>
+Date: Fri, 21 Feb 2020 09:30:05 -0500
+Subject: [PATCH] Newer webcolors has a new API apparently.
+
+---
+ jsonschema/_format.py | 2 +-
+ setup.cfg             | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/jsonschema/_format.py b/jsonschema/_format.py
+index 281a7cfc..f3c758c4 100644
+--- a/jsonschema/_format.py
++++ b/jsonschema/_format.py
+@@ -354,7 +354,7 @@ def is_css_color_code(instance):
+     def is_css21_color(instance):
+         if (
+             not isinstance(instance, str_types) or
+-            instance.lower() in webcolors.css21_names_to_hex
++            instance.lower() in webcolors.CSS21_NAMES_TO_HEX
+         ):
+             return True
+         return is_css_color_code(instance)
+#diff --git a/setup.cfg b/setup.cfg
+#index 250c15be..a75c1150 100644
+#--- a/setup.cfg
+#+++ b/setup.cfg
+#@@ -40,11 +40,11 @@ format =
+#     jsonpointer>1.13
+#     rfc3987
+#     strict-rfc3339
+#-    webcolors
+#+    webcolors>=1.11.1
+# format_nongpl =
+#     idna
+#     jsonpointer>1.13
+#-    webcolors
+#+    webcolors>=1.11.1
+#     rfc3986-validator>0.1.0
+#     rfc3339-validator
+# 
+From 0d192e192526252c30c16b3651c293bb5f21a99f Mon Sep 17 00:00:00 2001
+From: Julian Berman <Julian@GrayVines.com>
+Date: Fri, 21 Feb 2020 09:56:13 -0500
+Subject: [PATCH] Sigh... but also drops Py2 compat.
+
+---
+ jsonschema/_format.py | 11 ++++++++---
+ setup.cfg             |  4 ++--
+ 2 files changed, 10 insertions(+), 5 deletions(-)
+
+diff --git a/jsonschema/_format.py b/jsonschema/_format.py
+index f3c758c4..b96efb69 100644
+--- a/jsonschema/_format.py
++++ b/jsonschema/_format.py
+@@ -342,10 +342,15 @@ def is_draft3_time(instance):
+     return datetime.datetime.strptime(instance, "%H:%M:%S")
+ 
+ 
+-try:
++try:  # webcolors>=1.11
++    from webcolors import CSS21_NAMES_TO_HEX
+     import webcolors
+ except ImportError:
+-    pass
++    try:  # webcolors<1.11
++        from webcolors import css21_names_to_hex as CSS21_NAMES_TO_HEX
++        import webcolors
++    except ImportError:
++        pass
+ else:
+     def is_css_color_code(instance):
+         return webcolors.normalize_hex(instance)
+@@ -354,7 +359,7 @@ def is_css_color_code(instance):
+     def is_css21_color(instance):
+         if (
+             not isinstance(instance, str_types) or
+-            instance.lower() in webcolors.CSS21_NAMES_TO_HEX
++            instance.lower() in CSS21_NAMES_TO_HEX
+         ):
+             return True
+         return is_css_color_code(instance)
+#diff --git a/setup.cfg b/setup.cfg
+#index a75c1150..250c15be 100644
+#--- a/setup.cfg
+#+++ b/setup.cfg
+#@@ -40,11 +40,11 @@ format =
+#     jsonpointer>1.13
+#     rfc3987
+#     strict-rfc3339
+#-    webcolors>=1.11.1
+#+    webcolors
+# format_nongpl =
+#     idna
+#     jsonpointer>1.13
+#-    webcolors>=1.11.1
+#+    webcolors
+#     rfc3986-validator>0.1.0
+#     rfc3339-validator
+# 
