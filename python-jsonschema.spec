@@ -68,6 +68,7 @@ BuildRequires:	rpmbuild(macros) >= 1.714
 BuildRequires:	sphinx-pdg-3
 BuildRequires:	python3-certifi
 BuildRequires:	python3-lxml
+BuildRequires:	python3-pyrsistent
 BuildRequires:	python3-sphinxcontrib-spelling
 %endif
 Requires:	python-modules >= 1:2.7
