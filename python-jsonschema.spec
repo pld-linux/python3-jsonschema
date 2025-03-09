@@ -100,8 +100,8 @@ dla Pythona.
 
 %prep
 %setup -q -n %{module}-%{version}
-%patch0 -p1
-%patch1 -p1
+%patch -P 0 -p1
+%patch -P 1 -p1
 
 install -d docs/_cache
 cp -p %{SOURCE1} docs/_cache/spec.html
