@@ -11,7 +11,7 @@ Summary(pl.UTF-8):	Implementacja sprawdzania poprawności schematu JSON dla Pyth
 Name:		python-%{module}
 # keep 3.x here for python2 support
 Version:	3.2.0
-Release:	6
+Release:	7
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.python.org/simple/jsonschema/
