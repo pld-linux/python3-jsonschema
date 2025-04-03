@@ -9,7 +9,7 @@ Summary(pl.UTF-8):	Implementacja sprawdzania poprawności schematu JSON dla Pyth
 Name:		python3-%{module}
 # keep 3.x here for python2 support
 Version:	4.23.0
-Release:	1
+Release:	2
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.python.org/simple/jsonschema/
@@ -23,6 +23,9 @@ BuildRequires:	python3-modules >= 1:3.5
 BuildRequires:	python3-build
 BuildRequires:	python3-installer
 BuildRequires:	python3-vcversioner >= 2.16.0.0
+BuildRequires:	python3-hatchling
+BuildRequires:	python3-hatch-vcs
+BuildRequires:	python3-hatch-fancy-pypi-readme
 %if %{with tests}
 BuildRequires:	python3-attrs >= 17.4.0
 BuildRequires:	python3-idna
