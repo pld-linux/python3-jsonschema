@@ -21,6 +21,7 @@ BuildRequires:	python3-hatch-vcs
 BuildRequires:	python3-hatchling
 BuildRequires:	python3-installer
 BuildRequires:	python3-modules >= 1:3.9
+BuildRequires:	python3-sphinx_json_schema_spec
 %if %{with tests}
 BuildRequires:	python3-attrs >= 22.2.0
 BuildRequires:	python3-fqdn
