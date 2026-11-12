@@ -7,21 +7,20 @@
 Summary:	An implementation of JSON Schema validation for Python 3
 Summary(pl.UTF-8):	Implementacja sprawdzania poprawności schematu JSON dla Pythona 3
 Name:		python3-%{module}
-Version:	4.25.0
+Version:	4.26.0
 Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/jsonschema/
 Source0:	https://files.pythonhosted.org/packages/source/j/jsonschema/%{module}-%{version}.tar.gz
-# Source0-md5:	94a6dbde3151edcf8e102e2fe229a498
+# Source0-md5:	3c1deb667257ae19924dede13332d906
 URL:		https://pypi.org/project/jsonschema
 BuildRequires:	python3-build
 BuildRequires:	python3-hatch-fancy-pypi-readme
 BuildRequires:	python3-hatch-vcs
 BuildRequires:	python3-hatchling
 BuildRequires:	python3-installer
-BuildRequires:	python3-modules >= 1:3.9
-BuildRequires:	python3-sphinx_json_schema_spec
+BuildRequires:	python3-modules >= 1:3.10
 %if %{with tests}
 BuildRequires:	python3-attrs >= 22.2.0
 BuildRequires:	python3-fqdn
@@ -35,7 +34,7 @@ BuildRequires:	python3-rfc3339_validator
 BuildRequires:	python3-rfc3986_validator >= 0.1.1
 BuildRequires:	python3-rfc3987
 BuildRequires:	python3-rfc3987_syntax >= 1.1.0
-BuildRequires:	python3-rpds-py >= 0.7.1
+BuildRequires:	python3-rpds-py >= 0.25.0
 BuildRequires:	python3-uri-template
 BuildRequires:	python3-virtue
 BuildRequires:	python3-webcolors >= 24.6.0
@@ -53,7 +52,7 @@ BuildRequires:	python3-sphinxcontrib-spelling
 BuildRequires:	python3-sphinxext.opengraph
 BuildRequires:	sphinx-pdg-3
 %endif
-Requires:	python3-modules >= 1:3.9
+Requires:	python3-modules >= 1:3.10
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -68,8 +67,10 @@ dla Pythona.
 %prep
 %setup -q -n %{module}-%{version}
 
+%if %{with doc}
 install -d docs/_cache
 cp -p %{py3_sitescriptdir}/sphinx_json_schema_spec/_cache/*.html docs/_cache
+%endif
 
 %build
 %py3_build_pyproject
